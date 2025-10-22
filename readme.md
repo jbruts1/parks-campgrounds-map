@@ -5,6 +5,9 @@ This web map visualizes the locations of National Parks and Campgrounds across t
 It allows users to toggle between map layers (Street and Satellite view) and dataset layers.
 An analysis function calculates the average distance from each National Park to its nearest Campground. 
 
+## Approach
+For this project, I analyzed the spatial relationship between National Parks and Campgrounds in the United States. Using Leaflet.js and PapaParse, I loaded both datasets and plotted each location with a circle marker on an interactive map. I then calculated the distance from each National Park to its nearest Campground using Leaflet's map.distance() method. This approach allowed me to quantify accessibility of campgrounds realtive to parks and provided and average distance metric. 
+
 ## Datasets
 
 - National Parks: Downloaded from POI Factory, includes latitude, longitude, and name.
