@@ -22,7 +22,9 @@ function loadCSV(url, layer, iconUrl, color) {
         header: false,
         complete: function (results) {
             results.data.forEach(row => {
-                const [lon, lat, name, desc]= row;
+                const lat = parseFloat(row.Latitude);
+                const lon = parseFloat(row.Longitude);
+                const name = row.Name;
                 const latNum = parseFloat(lat);
                 const lonNum = parseFloat(lon);
                 if (!isNaN(latNum) && !isNaN(lonNum)) {
@@ -67,16 +69,14 @@ Promise.all([
     let totalDist = 0;
     let validCount = 0;
     parks.forEach(p => {
-        const [lonP, latP] =p;
-        const latPark = parseFloat(latP);
-        const lonPark = parseFloat(lonP);
+        const latPark = parseFloat(p.Latitude);
+        const lonPark = parseFloat(p.Longitude);
         if (isNaN(latPark) || isNaN(lonPark)) return;
 
         let minDist = Infinity;
         camps.forEach(c => {
-            const [lonC, latC] = c;
-            const latCamp = parseFloat(latC);
-            const lonCamp = parseFloat(lonC);
+            const latCamp = parseFloat(p.Latitude);
+            const lonCamp = parseFloat(p.Longitude);
             if (isNaN(latCamp) || isNaN(lonCamp)) return;
 
             const dist = map.distance([latPark, lonPark], [latCamp, lonCamp]);
