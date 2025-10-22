@@ -16,7 +16,7 @@ const parksLayer = L.layerGroup();
 const campsLayer = L.layerGroup();
 
 //load in CSVs
-function loadCSV(url, layer, iconUrl, color) {
+function loadCSV(url, layer, color) {
     Papa.parse(url, {
         download: true,
         header: true,
@@ -28,7 +28,7 @@ function loadCSV(url, layer, iconUrl, color) {
                 const latNum = parseFloat(lat);
                 const lonNum = parseFloat(lon);
                 if (!isNaN(latNum) && !isNaN(lonNum)) {
-                    const marker = L.circleMarker([latNum, lonNum], {
+                    const marker = L.circleMarker([lonNum, latNum], {
                         radius: 5,
                         fillColor: color,
                         color: "#000",
@@ -75,8 +75,8 @@ Promise.all([
 
         let minDist = Infinity;
         camps.forEach(c => {
-            const latCamp = parseFloat(p.Latitude);
-            const lonCamp = parseFloat(p.Longitude);
+            const latCamp = parseFloat(c.Latitude);
+            const lonCamp = parseFloat(c.Longitude);
             if (isNaN(latCamp) || isNaN(lonCamp)) return;
 
             const dist = map.distance([latPark, lonPark], [latCamp, lonCamp]);
