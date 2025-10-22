@@ -6,3 +6,39 @@ const street = L.tilelayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution: "OpenStreetMap contributors"
 }).addTo(map);
 
+const satellite = L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    { attribution: "Tiles Esri"}
+);
+
+//Make layer groups
+const parksLayer = L.layerGroup();
+const campsLayer = L.layerGroup();
+
+//load in CSVs
+function loadCSV(url, layer, iconUrl, color) {
+    Papa.parse(url, {
+        download: true,
+        header: false,
+        complete: function (results) {
+            results.data.forEach(row => {
+                const [lon, lat, name, desc]= row;
+                const latNum = parseFloat(lat);
+                const lonNum = parseFloat(lon);
+                if (!isNaN(latNum) && !isNaN(lonNum)) {
+                    const marker = L.circleMarker([latNum, lonNum], {
+                        radius: 5,
+                        fillColor: color,
+                        color: "#000",
+                        weight: 1,
+                        opacity:1,
+                        fillOpacity: 0.8
+                    });
+                    marker.bindPopup(`<b>${name}</b><br>${desc || ""}`);
+                    layer.addLayer(marker);
+                }
+            });
+        }
+    });
+    
+}
