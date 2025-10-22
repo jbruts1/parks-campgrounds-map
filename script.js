@@ -1,8 +1,8 @@
 // Initialize the map
-const map = L.map("map").setview([39.5, -98.35], 4);
+const map = L.map("map").setView([39.5, -98.35], 4);
 
 // Base map
-const street = L.tilelayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+const street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "OpenStreetMap contributors"
 }).addTo(map);
 
@@ -44,7 +44,7 @@ function loadCSV(url, layer, iconUrl, color) {
 }
 
 //load both CSVs as layers
-loadCSV("data/National Parks Plua (1).csv", parksLayer, "green", "#2E8B57");
+loadCSV("data/National Parks Plus (1).csv", parksLayer, "green", "#2E8B57");
 loadCSV("data/Combined US Campgrounds by rivopom.csv", campsLayer, "orange", "FFA500");
 
 //adding layers to map
@@ -57,3 +57,40 @@ const overlayMaps = {"National Parks": parksLayer, "Campgrounds": campsLayer};
 L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 //analyze proximity to each other
+Promise.all([
+    fetch("data/National Parks Plus (1).csv").then(r => r.text()),
+    fetch("data/Combined US Campgrounds by rivopom.csv").then(r=>r.text())
+]).then(([parksCSV, campsCSV])=> {
+    const parks = Papa.parse(parksCSV, { header: false}).data;
+    const camps = Papa.parse(campsCSV, { header: false}).data;
+
+    let totalDist = 0;
+    let validCount = 0;
+    parks.forEach(p => {
+        const [lonP, latP] =p;
+        const latPark = parseFloat(latP);
+        const lonPark = parseFloat(lonP);
+        if (isNaN(latPark) || isNaN(lonPark)) return;
+
+        let minDist = Infinity;
+        camps.forEach(c => {
+            const [lonC, latC] = c;
+            const latCamp = parseFloat(latC);
+            const lonCamp = parseFloat(lonC);
+            if (isNaN(latCamp) || isNaN(lonCamp)) return;
+
+            const dist = map.distance([latPark, lonPark], [latCamp, lonCamp]);
+            if (dist < minDist) minDist = dist;
+
+            });
+
+            if (minDist < Infinity) {
+                totalDist += minDist / 1609 //converting this to miles
+                validCount++;
+            }
+
+        });
+
+        const avgDist = (totalDist / validCount).toFixed(2);
+        alert(`Average distance from a National Park to its nearest Campground: ${avgDist} miles`);
+    });
