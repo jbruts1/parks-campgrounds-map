@@ -3,7 +3,7 @@
 ## Description
 This web map visualizes the locations of National Parks and Campgrounds across the United States using Leaflet.js and data from the POI Factory.
 It allows users to toggle between map layers (Street and Satellite view) and dataset layers.
-An analysis function calculates the average distance from each National Park to its nearest Campground.
+An analysis function calculates the average distance from each National Park to its nearest Campground. 
 
 ## Datasets
 
@@ -18,3 +18,7 @@ An analysis function calculates the average distance from each National Park to 
 
 ## How to View the Map
 - Click this link: https://jbruts1.github.io/parks-campgrounds-map/
+
+## Tools and Reference Documentation
+- Leaflet: https://leafletjs.com/reference.html
+- PapaParse: https://www.papaparse.com/docs
