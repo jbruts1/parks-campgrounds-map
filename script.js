@@ -19,7 +19,7 @@ const campsLayer = L.layerGroup();
 function loadCSV(url, layer, iconUrl, color) {
     Papa.parse(url, {
         download: true,
-        header: false,
+        header: true,
         complete: function (results) {
             results.data.forEach(row => {
                 const lat = parseFloat(row.Latitude);
@@ -36,7 +36,7 @@ function loadCSV(url, layer, iconUrl, color) {
                         opacity:1,
                         fillOpacity: 0.8
                     });
-                    marker.bindPopup(`<b>${name}</b><br>${desc || ""}`);
+                    marker.bindPopup(`<b>${name}</b>`);
                     layer.addLayer(marker);
                 }
             });
@@ -63,8 +63,8 @@ Promise.all([
     fetch("data/National Parks Plus (1).csv").then(r => r.text()),
     fetch("data/Combined US Campgrounds by rivopom.csv").then(r=>r.text())
 ]).then(([parksCSV, campsCSV])=> {
-    const parks = Papa.parse(parksCSV, { header: false}).data;
-    const camps = Papa.parse(campsCSV, { header: false}).data;
+    const parks = Papa.parse(parksCSV, { header: true}).data;
+    const camps = Papa.parse(campsCSV, { header: true}).data;
 
     let totalDist = 0;
     let validCount = 0;
