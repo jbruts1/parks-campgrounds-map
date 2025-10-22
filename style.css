@@ -10,3 +10,9 @@ h1 {
     font-size: 1.5em;
     color: #333;
 }
+
+#map {
+    height: 90vh;
+    width: 100%;
+    border-top: 2x solid #333;
+}
