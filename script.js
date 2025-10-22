@@ -45,7 +45,7 @@ function loadCSV(url, layer, iconUrl, color) {
 
 //load both CSVs as layers
 loadCSV("data/National Parks Plus (1).csv", parksLayer, "green", "#2E8B57");
-loadCSV("data/Combined US Campgrounds by rivopom.csv", campsLayer, "orange", "FFA500");
+loadCSV("data/Combined US Campgrounds by rivopom.csv", campsLayer, "orange", "#FFA500");
 
 //adding layers to map
 parksLayer.addTo(map);
