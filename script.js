@@ -29,7 +29,7 @@ function loadCSV(url, layer, color) {
                 const lonNum = parseFloat(lon);
                 if (!isNaN(latNum) && !isNaN(lonNum)) {
                     const marker = L.circleMarker([lonNum, latNum], {
-                        radius: 5,
+                        radius: 2.5,
                         fillColor: color,
                         color: "#000",
                         weight: 1,
