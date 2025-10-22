@@ -17,4 +17,4 @@ An analysis function calculates the average distance from each National Park to 
 - readme.md - Project explanation (this file).
 
 ## How to View the Map
-- Click this link: 
+- Click this link: https://jbruts1.github.io/parks-campgrounds-map/
